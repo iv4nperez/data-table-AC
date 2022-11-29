@@ -8,10 +8,25 @@
     </div>
     <div class="flex">
         <div v-if="showItem" class="flex transition ease-in-out delay-150" >
-          <ColSpan class="transition ease-in-out delay-150" title="MXN" :item="itemsPrepareMxn"  />
-          <ColSpan class="transition ease-in-out delay-150" title="USD" :item="itemsPrepareUsd" />
+          <ColSpan class="transition ease-in-out delay-150" 
+            title="MXN" 
+            :item="itemsPrepareMxn"
+            :showSegmentos="showSegmentos"
+            :itemSegmentos="itemsPrepareSegmentosMXNMXN"
+            />
+          <ColSpan
+            class="transition ease-in-out delay-150"
+            title="USD"
+            :item="itemsPrepareUsd"
+            :showSegmentos="showSegmentos"
+            :itemSegmentos="itemsPrepareSegmentosUSD"
+          />
         </div>
-        <ColSpan class="transition ease-in-out delay-150" title="HOM .MXN" :item="itemsPrepareTotal" />
+        <ColSpan class="transition ease-in-out delay-150"
+          title="HOM .MXN"
+          :item="itemsPrepareTotal"
+          :showSegmentos="showSegmentos"
+          :itemSegmentos="itemsPrepareSegmentosHomeMxn" />
      </div>
     </div>
 </template>
@@ -26,6 +41,10 @@ export default({
     contrato:{
         type: String,
         default: ''
+    },
+    showSegmentos: {
+      type: Boolean,
+      default: false
     },
     items: {
       type: Array,
@@ -50,6 +69,90 @@ export default({
         total: totales[0]?.montoMxn ?? 0
       }
     },
+
+    itemsPrepareSegmentosHomeMxn(){
+      let conciliar = this.items.filter((x) => x.estatus.toLowerCase().trim() === 'conciliacion')
+      let porConciliar = this.items.filter((x) => x.estatus.toLowerCase().trim() === 'conciliar')
+
+      let obra = conciliar[0].segmentos.filter(item => item.segmentoDesc === 'OBRA')[0].homo
+      let barco = conciliar[0].segmentos.filter(item => item.segmentoDesc === 'BARCO')[0].homo
+      let pernocta = conciliar[0].segmentos.filter(item => item.segmentoDesc === 'PERNOCTA')[0].homo
+
+
+      let obraXC = porConciliar[0].segmentos.filter(item => item.segmentoDesc === 'OBRA')[0].homo
+      let barcoXC = porConciliar[0].segmentos.filter(item => item.segmentoDesc === 'BARCO')[0].homo
+      let pernoctaXC = porConciliar[0].segmentos.filter(item => item.segmentoDesc === 'PERNOCTA')[0].homo
+
+      return {
+        obraConciliacion: obra,
+        barcoConciliacion: barco,
+        pernoctaConciliacion: pernocta,
+        totalEnConciliacion: obra + barco + pernocta,
+
+        obraPorConciliacion: obraXC,
+        barcoPorConciliacion: barcoXC,
+        pernoctaPorConciliacion: pernoctaXC,
+        totalPorConciliacion: obraXC + barcoXC + pernoctaXC,
+      }
+    },
+
+    itemsPrepareSegmentosUSD(){
+      let conciliar = this.items.filter((x) => x.estatus.toLowerCase().trim() === 'conciliacion')
+      let porConciliar = this.items.filter((x) => x.estatus.toLowerCase().trim() === 'conciliar')
+
+      let obra = conciliar[0].segmentos.filter(item => item.segmentoDesc === 'OBRA')[0].montoUsd
+      let barco = conciliar[0].segmentos.filter(item => item.segmentoDesc === 'BARCO')[0].montoUsd
+      let pernocta = conciliar[0].segmentos.filter(item => item.segmentoDesc === 'PERNOCTA')[0].montoUsd
+
+      let obraXC = porConciliar[0].segmentos.filter(item => item.segmentoDesc === 'OBRA')[0].montoUsd
+      let barcoXC = porConciliar[0].segmentos.filter(item => item.segmentoDesc === 'BARCO')[0].montoUsd
+      let pernoctaXC = porConciliar[0].segmentos.filter(item => item.segmentoDesc === 'PERNOCTA')[0].montoUsd
+
+
+
+      return {
+        obraConciliacion: obra,
+        barcoConciliacion: barco,
+        pernoctaConciliacion: pernocta,
+        totalEnConciliacion: obra + barco + pernocta,
+
+        obraPorConciliacion: obraXC,
+        barcoPorConciliacion: barcoXC,
+        pernoctaPorConciliacion: pernoctaXC,
+        totalPorConciliacion: obraXC + barcoXC + pernoctaXC,
+      }
+    },
+
+    itemsPrepareSegmentosMXNMXN(){
+      let conciliar = this.items.filter((x) => x.estatus.toLowerCase().trim() === 'conciliacion')
+      let porConciliar = this.items.filter((x) => x.estatus.toLowerCase().trim() === 'Conciliar')
+
+      let obra = conciliar[0].segmentos.filter(item => item.segmentoDesc === 'OBRA')[0].montoMxn
+      let barco = conciliar[0].segmentos.filter(item => item.segmentoDesc === 'BARCO')[0].montoMxn
+      let pernocta = conciliar[0].segmentos.filter(item => item.segmentoDesc === 'PERNOCTA')[0].montoMxn
+
+
+      let obraXC = conciliar[0].segmentos.filter(item => item.segmentoDesc === 'OBRA')[0].montoMxn
+      let barcoXC = conciliar[0].segmentos.filter(item => item.segmentoDesc === 'BARCO')[0].montoMxn
+      let pernoctaXC = conciliar[0].segmentos.filter(item => item.segmentoDesc === 'PERNOCTA')[0].montoMxn
+
+      return {
+        obraConciliacion: obra,
+        barcoConciliacion: barco,
+        pernoctaConciliacion: pernocta,
+        totalEnConciliacion: obra + barco + pernocta,
+
+        obraPorConciliacion: obraXC,
+        barcoPorConciliacion: barcoXC,
+        pernoctaPorConciliacion: pernoctaXC,
+        totalPorConciliacion: obraXC + barcoXC + pernoctaXC,
+      }
+    },
+
+
+
+
+
     itemsPrepareUsd(){
       let mxnConciliacion = this.items.filter((x) => x.estatus.toLowerCase().trim() === 'conciliacion')
       let mxnPorConciliacion = this.items.filter((x) => x.estatus.toLowerCase().trim() === 'conciliar')
