@@ -21,9 +21,12 @@
               { 'flex justify-center items-center': show }
             ]"
             class="border w-full px-4  relative">
-            
+            <button @click="(showStatusEnConciliacion = !showStatusEnConciliacion)" style="border: 1px solid #000; right: -3px;z-index: 3; padding: 0 4px 0px 4px;" class="absolute bg-white">
+              {{ showStatusEnConciliacion ? '-' : '+' }}
+            </button>
             <span class="font-bold block">EN CONCILIACIÓN</span>
           </div>
+
           <div v-if="show">
             <div v-for="(item) in segmentos" class="border w-full px-4 flex justify-end relative">
               <span class="font-bold block">{{ item }}</span>
@@ -43,16 +46,19 @@
               { 'flex justify-center items-center': show }
             ]"
             class="border w-full px-4  relative">
+            <button @click="(showStatusPorConciliar = !showStatusPorConciliar)" style="border: 1px solid #000; right: -3px;z-index: 3; padding: 0 4px 0px 4px;" class="absolute bg-white">
+              {{ showStatusPorConciliar ? '-' : '+' }}
+            </button>
             <span class="font-bold block">POR CONCILIAR</span>
           </div>
+
           <div v-if="show">
             <div v-for="(item) in segmentos" class="border w-full px-4 flex justify-end relative">
               <span class="font-bold block">{{ item }}</span>
             </div>
           </div>
         </div>
-        <div
-        style="background-color: gray;color: white"
+        <div style="background-color: gray;color: white"
         class="border w-full px-2 flex justify-end">
           <span>TOTALES</span>
         </div>
@@ -70,7 +76,9 @@ export default({
   },
   data(){
     return {
-      segmentos: ['OBRA','BARCO', 'PERNOCTA']
+      segmentos: ['OBRA','BARCO', 'PERNOCTA'],
+      showStatusPorConciliar: false,
+      showStatusEnConciliacion: false
     }
   },
   computed:{

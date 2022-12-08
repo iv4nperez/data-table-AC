@@ -7,6 +7,8 @@
         <div class="border w-full px-2">
           <span>{{ item?.conciliacion }}</span>
         </div>
+        <div>
+        </div>
         <div class="border w-full px-2">
           <span>{{ item?.porConciliar }}</span>
         </div>
@@ -14,6 +16,10 @@
           <span>{{ item?.conciliacion + item?.porConciliar }}</span>
         </div>
       </div>
+
+
+
+
       <div  v-else class="bg-white w-full">
         <div class="border w-full px-2">
           <span>{{ itemSegmentos?.obraConciliacion }}</span>
