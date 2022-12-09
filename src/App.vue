@@ -2,7 +2,8 @@
   <div class="c-flex c-h-screen c-w-screen c-justify-center c-items-center c-px-8">
   
 
-    <StatusDataTable :title="`<p>FACTORES<br/>AUTORIZADOS</p>`"/>
+   <div class="c-flex c-w-full c-overflow-x-auto c-justify-center">
+      <StatusDataTable :title="`<p>FACTORES<br/>AUTORIZADOS</p>`" v-model="showSegmentos" />
 
     <HeaderTable 
       v-for="(item, i) in fatorAutorizado.contratos" 
@@ -11,7 +12,10 @@
       :homo="item.homo"
       :montoMxn="item.montoMxn"
       :montoUsd="item.montoUsd"
+      :showSegmentos="showSegmentos"
     ></HeaderTable>
+   
+   </div>
 
 
   </div>
@@ -33,18 +37,16 @@ export default({
   },
   data(){
     return {
-      fatorAutorizado: null
+      fatorAutorizado: null,
+      showSegmentos: false
     }
-  },  
+  },
   methods:{
     async getData(){
       let { data } = await axios.get('https://localhost:5001/api/PronosticosAC/escenario?monedaId=1&tc=20.01')
       this.fatorAutorizado = data.data.factorAutorizado
-
       console.log(this.fatorAutorizado)
     }
-
-
   },
   created(){
 

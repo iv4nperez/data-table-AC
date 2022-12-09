@@ -12,24 +12,86 @@
                 {{ showElements ? `-` : `+` }}
             </button> -->
         </div>
-        <table>
-            <thead class="c-bg-[#ee7c31]">
-                <tr>
-                    <th :colspan="3"  colspan="1" class="c-border c-border-black c-text-center c-px-4 c-font-bold c-text-black c-text-sm">ESTATUS</th>
-                </tr>
-            </thead>
-            <tbody class="c-bg-white">
-                <tr>
-                    <td  class="c-border c-border-black c-text-black c-px-4 c-text-sm c-font-bold c-text-right"> EN CONCILIACION</td>
-                </tr>
-                <tr>
-                    <td  class="c-border c-border-black c-text-black c-px-4 c-text-sm c-font-bold c-text-right">POR CONCILIAR</td>
-                </tr>
-                <tr>
-                    <td class="c-border c-border-black c-text-black c-px-4 c-text-sm c-font-bold c-text-right">TOTALES:</td>
-                </tr>
-            </tbody>
-        </table>
+        <div  class="c-flex c-gap-1">
+            <table class="c-w-40 c-flex-shrink-0">
+                <thead class="c-bg-[#ee7c31]">
+                    <tr class="c-relative">
+                        <th :colspan="3"  colspan="1" class="c-border c-border-black c-text-center c-px-4 c-font-bold c-text-black c-text-sm">ESTATUS</th>
+
+                        <button @click="(showSegmentos = !showSegmentos)" style="border:1px solid" class="c-bg-white c-px-2 c-text-black c-absolute -c-left-3 -c-top-1 c-z-50" >
+                            {{ showSegmentos ? `-` : `+` }}
+                        </button>
+
+                    </tr>
+                </thead>
+                <tbody class="c-bg-white">
+                    <tr class="c-relative">
+                        <td colspan="1"  class="c-border c-border-black c-text-black c-px-4 c-text-sm c-font-bold c-text-center">EN CONCILIACION</td>
+                        <button v-if="!showSegmentos" style="border:1px solid" class="c-bg-white c-px-1 c-h-5 c-text-black c-absolute -c-right-2 c-z-50 c-flex c-items-center">
+                            +
+                        </button>
+                    </tr>
+                    <tr class="c-relative" v-if="!showSegmentos">
+                        <td  class="c-border c-border-black c-text-black c-px-4 c-text-sm c-font-bold c-text-center">POR CONCILIAR</td>
+                        <button v-if="!showSegmentos" style="border:1px solid" class="c-bg-white c-px-1 c-h-5 c-text-black c-absolute -c-right-2 c-z-50 c-flex c-items-center">
+                            +
+                        </button>
+                    </tr>
+                    <tr  v-if="!showSegmentos">
+                        <td class="c-border c-border-black c-text-black c-px-4 c-text-sm c-font-bold c-text-center">TOTALES:</td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="c-w-full" v-if="showSegmentos">
+                <thead class="c-bg-[#ee7c31]">
+                    <tr>
+                        <th :colspan="3"  colspan="1" class="c-border c-border-black c-text-center c-px-4 c-font-bold c-text-black c-text-sm">SEGMENTOS</th>
+                    </tr>
+                </thead>
+                <tbody class="c-bg-white">
+                    <tr>
+                        <td  class="c-border c-border-black c-text-black c-px-4 c-text-sm c-font-bold c-text-right">BARCO</td>
+                    </tr>
+                    <tr>
+                        <td  class="c-border c-border-black c-text-black c-px-4 c-text-sm c-font-bold c-text-right">OBRA</td>
+                    </tr>
+                    <tr>
+                        <td class="c-border c-border-black c-text-black c-px-4 c-text-sm c-font-bold c-text-right">PERNOCTA</td>
+                    </tr>
+                    <tr class="c-bg-gray-300">
+                        <td class="c-border c-border-black c-text-black c-px-4 c-text-sm c-font-bold c-text-right">TOTALES</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div v-if="showSegmentos" class="c-flex c-gap-1 c-w-full">
+            <table class="c-w-40 c-flex-shrink-0">
+                <tbody class="c-bg-white">
+                    <tr >
+                        <td colspan="1"  class="c-border c-border-black c-text-black c-px-4 c-text-sm c-font-bold c-text-center">POR CONCILIAR</td>
+                    </tr>
+                    
+                </tbody>
+            </table>
+            <table class="c-w-full" v-if="showSegmentos">
+                <tbody class="c-bg-white">
+                    <tr>
+                        <td  class="c-border c-border-black c-text-black c-px-4 c-text-sm c-font-bold c-text-right">BARCO</td>
+                    </tr>
+                    <tr>
+                        <td  class="c-border c-border-black c-text-black c-px-4 c-text-sm c-font-bold c-text-right">OBRA</td>
+                    </tr>
+                    <tr>
+                        <td class="c-border c-border-black c-text-black c-px-4 c-text-sm c-font-bold c-text-right">PERNOCTA</td>
+                    </tr>
+                    <tr class="c-bg-gray-300">
+                        <td class="c-border c-border-black c-text-black c-px-4 c-text-sm c-font-bold c-text-right">TOTALES</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
     </div>
     </div>
 </template>
@@ -39,11 +101,25 @@ export default({
         title:{
             type: String,
             default: ''
+        },
+        value:{
+            type: Boolean,
+            default: false
         }
     },
     data(){
         return {
             showElements: false
+        }
+    },
+    computed:{
+        showSegmentos: {
+            get(){
+                return this.value;
+            },
+            set(value){
+                this.$emit('input', value)
+            }
         }
     }
 })
