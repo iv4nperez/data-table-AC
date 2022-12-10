@@ -537,25 +537,12 @@ video {
   z-index: 50;
 }
 
-.c-my-4 {
-  margin-top: 1rem;
-  margin-bottom: 1rem;
-}
-
 .c-mt-9 {
   margin-top: 2.25rem;
 }
 
 .c-flex {
   display: flex;
-}
-
-.c-h-screen {
-  height: 100vh;
-}
-
-.c-w-screen {
-  width: 100vw;
 }
 
 .c-w-full {
@@ -580,6 +567,10 @@ video {
           user-select: none;
 }
 
+.c-flex-col {
+  flex-direction: column;
+}
+
 .c-items-center {
   align-items: center;
 }
@@ -594,10 +585,6 @@ video {
 
 .c-overflow-auto {
   overflow: auto;
-}
-
-.c-overflow-x-auto {
-  overflow-x: auto;
 }
 
 .c-border {
@@ -629,9 +616,9 @@ video {
   background-color: rgb(192 191 191 / var(--tw-bg-opacity));
 }
 
-.c-bg-gray-300 {
+.c-bg-slate-300 {
   --tw-bg-opacity: 1;
-  background-color: rgb(209 213 219 / var(--tw-bg-opacity));
+  background-color: rgb(203 213 225 / var(--tw-bg-opacity));
 }
 
 .c-bg-\[\#ee7c31\] {
@@ -639,9 +626,9 @@ video {
   background-color: rgb(238 124 49 / var(--tw-bg-opacity));
 }
 
-.c-bg-slate-300 {
+.c-bg-gray-300 {
   --tw-bg-opacity: 1;
-  background-color: rgb(203 213 225 / var(--tw-bg-opacity));
+  background-color: rgb(209 213 219 / var(--tw-bg-opacity));
 }
 
 .c-px-8 {
@@ -672,11 +659,6 @@ video {
 .c-py-1 {
   padding-top: 0.25rem;
   padding-bottom: 0.25rem;
-}
-
-.c-py-4 {
-  padding-top: 1rem;
-  padding-bottom: 1rem;
 }
 
 .c-text-center {

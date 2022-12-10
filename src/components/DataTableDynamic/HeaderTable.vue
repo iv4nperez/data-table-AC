@@ -68,9 +68,8 @@
                     </tr>
                 </div> -->
 
-                <div :style="`height: ${ maxSizeHeight > 0 ? maxSizeHeight + 'px' : 'auto' }; visibility: ${ index === 0 ? 'visible': 'hidden' }`" id="expandPorConciliar" class="c-bg-slate-300" v-if="expandPorConciliar && i === 1 ">
+                <td colspan="3" :style="`height: ${ maxSizeHeight > 0 ? maxSizeHeight + 'px' : 'auto' }; visibility: ${ index === 0 ? 'visible': 'hidden' }`" id="expandPorConciliar" class="c-bg-slate-300" v-if="expandPorConciliar && i === 1 ">
                     <tr  v-for="(conc, j) in dataPorConciliarOt" :key="conc.obraId" class="c-bg-white">
-
                         <td>
                             <div class="c-w-full">
                                 <div class="c-px-10 c-py-1   c-bg-[#1e295d] c-text-white c-relative">
@@ -103,10 +102,16 @@
                             </div>
                         </td>
                     </tr>
-                </div>
+                </td>
 
-
-                <tr v-if="(i + 1 === subItems.length)">
+                <tr v-if="subItems.length === 1">
+                    <td class="c-border c-border-black c-text-black c-px-4 c-text-sm">0</td>
+                    <td v-if="showElements" class="c-border c-border-black c-text-black c-px-4 c-text-sm">0</td>
+                    <td v-if="showElements" class="c-border c-border-black c-text-black c-px-4 c-text-sm">0</td>
+                </tr>
+                
+                
+                <tr class="c-bg-slate-300" v-if="(i + 1 === subItems.length)">
                     <td v-if="showElements" class="c-border c-border-black c-text-black c-px-4 c-text-sm"> {{ montoMxn }}</td>
                     <td v-if="showElements" class="c-border c-border-black c-text-black c-px-4 c-text-sm">{{ montoUsd }}</td>
                     <td class="c-border c-border-black c-text-black c-px-4 c-text-sm">{{ homo }}</td>
@@ -212,6 +217,11 @@ export default({
             if(this.expandPorConciliar){
                await this.getOts('Conciliar')
                await this.matchHeight()
+            }
+        },
+        showElements(){
+            if(this.showElements){
+                this.matchHeight()
             }
         }
     },

@@ -31,11 +31,19 @@
                             {{  showOTConcoliacion? '-' : '+' }}
                         </button>
                     </tr>
-                    <tr :style="`height: ${ maxSizeHeight > 0 && showOTPorConcoliacion ? maxSizeHeight + 22 + 'px' : 'auto' } ;`" class="c-relative" v-if="!showSegmentos">
+
+                    <tr v-if="showOTConcoliacion" :style="`height: ${ maxSizeHeight > 0 && showOTConcoliacion ? maxSizeHeight  + 'px' : 'auto' } ;`">
+                        <td>''</td>
+                    </tr>
+
+                    <tr  class="c-relative" v-if="!showSegmentos">
                         <td  class="c-border c-border-black c-text-black c-px-4 c-text-sm c-font-bold c-text-center">POR CONCILIAR</td>
                         <button @click="() => OTPorConcoliacion()" v-if="!showSegmentos" style="border:1px solid;height: 15px;bottom:-7px;right:-5px;width:15px" class="c-bg-white  c-text-black c-absolute c-z-50 c-flex c-justify-center c-items-center">
                             {{ showOTPorConcoliacion ? '-' : '+' }}
                         </button>
+                    </tr>
+                    <tr  v-if="showOTPorConcoliacion" :style="`height: ${ maxSizeHeight > 0 && showOTPorConcoliacion ? maxSizeHeight  + 'px' : 'auto' } ;visibility: ${ showOTPorConcoliacion ? 'hidden': 'visible' }`">
+                        <td>''</td>
                     </tr>
                     <tr  v-if="!showSegmentos">
                         <td class="c-border c-border-black c-text-black c-px-4 c-text-sm c-font-bold c-text-center">TOTALES:</td>
