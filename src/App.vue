@@ -1,18 +1,29 @@
 <template>
-  <div class="c-flex c-h-screen c-w-screen c-justify-center c-items-center c-px-8">
+  <div class="c-flex  c-justify-center c-items-center c-px-8">
   
 
-   <div class="c-flex c-w-full c-overflow-x-auto c-justify-center">
-      <StatusDataTable :title="`<p>FACTORES<br/>AUTORIZADOS</p>`" v-model="showSegmentos" />
+   <div class="c-flex c-w-full c-overflow-auto  c-justify-center">
+      <StatusDataTable 
+        :title="`<p>FACTORES<br/>AUTORIZADOS</p>`" 
+        v-model="showSegmentos" 
+        @OTConcoliacion="OTConcoliacion"
+        @OTPorConcoliacion="OTPorConcoliacion"
+        :maxSizeHeight="sizeAllItems"
+      />
 
     <HeaderTable 
-      v-for="(item, i) in fatorAutorizado.contratos" 
+      v-for="(item, i) in fatorAutorizado?.contratos" 
       :title="item.contratoId"
       :subItems="item.estatus"
       :homo="item.homo"
       :montoMxn="item.montoMxn"
       :montoUsd="item.montoUsd"
       :showSegmentos="showSegmentos"
+      :expandConciliacion="showOTConcoliacion"
+      :expandPorConciliar="showOTPorConcoliacion"
+      :index="i"
+      @sizeHeight="getSize"
+      :maxSizeHeight="sizeAllItems"
     ></HeaderTable>
    
    </div>
@@ -38,10 +49,23 @@ export default({
   data(){
     return {
       fatorAutorizado: null,
-      showSegmentos: false
+      showSegmentos: false,
+      showOTConcoliacion: false,
+      showOTPorConcoliacion: false,
+      sizeAllItems: 0
     }
   },
   methods:{
+
+    OTConcoliacion(n){
+        this.showOTConcoliacion = n
+    },
+    OTPorConcoliacion(n){
+        this.showOTPorConcoliacion = n
+    },
+    getSize(h){
+      this.sizeAllItems = h
+    },  
     async getData(){
       let { data } = await axios.get('https://localhost:5001/api/PronosticosAC/escenario?monedaId=1&tc=20.01')
       this.fatorAutorizado = data.data.factorAutorizado

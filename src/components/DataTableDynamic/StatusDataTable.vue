@@ -27,14 +27,14 @@
                 <tbody class="c-bg-white">
                     <tr class="c-relative">
                         <td colspan="1"  class="c-border c-border-black c-text-black c-px-4 c-text-sm c-font-bold c-text-center">EN CONCILIACION</td>
-                        <button v-if="!showSegmentos" style="border:1px solid" class="c-bg-white c-px-1 c-h-5 c-text-black c-absolute -c-right-2 c-z-50 c-flex c-items-center">
-                            +
+                        <button @click="() => OTConcoliacion()" v-if="!showSegmentos" style="border:1px solid;height: 15px;bottom:-7px;right:-5px;;width:15px" class="c-bg-white  c-text-black c-absolute c-z-50 c-flex  c-justify-center c-items-center">
+                            {{  showOTConcoliacion? '-' : '+' }}
                         </button>
                     </tr>
-                    <tr class="c-relative" v-if="!showSegmentos">
+                    <tr :style="`height: ${ maxSizeHeight > 0 && showOTPorConcoliacion ? maxSizeHeight + 22 + 'px' : 'auto' } ;`" class="c-relative" v-if="!showSegmentos">
                         <td  class="c-border c-border-black c-text-black c-px-4 c-text-sm c-font-bold c-text-center">POR CONCILIAR</td>
-                        <button v-if="!showSegmentos" style="border:1px solid" class="c-bg-white c-px-1 c-h-5 c-text-black c-absolute -c-right-2 c-z-50 c-flex c-items-center">
-                            +
+                        <button @click="() => OTPorConcoliacion()" v-if="!showSegmentos" style="border:1px solid;height: 15px;bottom:-7px;right:-5px;width:15px" class="c-bg-white  c-text-black c-absolute c-z-50 c-flex c-justify-center c-items-center">
+                            {{ showOTPorConcoliacion ? '-' : '+' }}
                         </button>
                     </tr>
                     <tr  v-if="!showSegmentos">
@@ -105,11 +105,27 @@ export default({
         value:{
             type: Boolean,
             default: false
+        },
+        maxSizeHeight:{
+            type: Number,
+            default: 0
         }
     },
     data(){
         return {
-            showElements: false
+            showElements: false,
+            showOTConcoliacion: false,
+            showOTPorConcoliacion: false
+        }
+    },
+    methods:{
+        OTConcoliacion(){
+            this.showOTConcoliacion = !this.showOTConcoliacion
+            this.$emit('OTConcoliacion', this.showOTConcoliacion)
+        },
+        OTPorConcoliacion(){
+            this.showOTPorConcoliacion = !this.showOTPorConcoliacion
+            this.$emit('OTPorConcoliacion', this.showOTPorConcoliacion)
         }
     },
     computed:{
@@ -120,7 +136,8 @@ export default({
             set(value){
                 this.$emit('input', value)
             }
-        }
+        },
+    
     }
 })
 </script>
